@@ -15,11 +15,10 @@ const SearchForm = () => {
             name="search"
             placeholder="Фильм"
             className="search__input"
-            required
           />
         </label>
       </form>
-      <button className="search__button">
+      <button className="search__button hover-btn">
         <img src={arrow} alt="Arrow icon" />
       </button>
     </div>

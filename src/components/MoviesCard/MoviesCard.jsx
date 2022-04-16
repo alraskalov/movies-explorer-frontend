@@ -7,7 +7,7 @@ const MoviesCard = () => {
   const { pathname } = useLocation();
   return (
     <div className="movies-card">
-      <img src={image} alt="" className="movies-card__image" />
+      <img src={image} alt="Movies" className="movies-card__image" />
       <div className="movies-card__description">
         <div className="movies-card__description-container">
           <h3 className="movies-card__title">33 слова о дизайне</h3>

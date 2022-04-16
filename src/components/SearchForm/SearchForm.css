@@ -19,6 +19,7 @@
   height: 34px;
   cursor: pointer;
   padding: 11px 14px 11px 15px;
+  transition: .3s;
 }
 
 .search__form {
@@ -34,7 +35,7 @@
   text-align: center;
   color: #a0a0a0;
   width: 100%;
-  background: #fafafa;
+  background: transparent;
 }
 
 @media screen and (max-width: 450px) {
