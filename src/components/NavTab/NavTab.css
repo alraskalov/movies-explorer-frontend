@@ -1,0 +1,43 @@
+.nav-tab__anchors {
+  display: flex;
+}
+
+.nav-tab__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 96px;
+  height: 36px;
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  border: none;
+}
+
+.nav-tab__button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.nav-tab__anchor {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #000;
+  transition: .5s;
+}
+
+@media screen and (max-width: 440px) {
+  .nav-tab__button {
+    width: 82px;
+    height: 26px;
+  }
+  .nav-tab__button:not(:last-child) {
+    margin-right: 6px;
+  }
+  .nav-tab__anchor {
+    font-size: 10px;
+    line-height: 1.6;
+
+  }
+}
