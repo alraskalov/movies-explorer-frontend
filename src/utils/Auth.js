@@ -1,3 +1,5 @@
+import { API_CONFIG } from "./utils";
+
 class Auth {
   constructor(options) {
     this._url = options.baseUrl;
@@ -49,10 +51,9 @@ class Auth {
 }
 
 const auth = new Auth({
-  baseUrl: "http://localhost:3000",
+  baseUrl: API_CONFIG.URL_API,
   headers: {
     "Content-Type": "application/json",
   },
 })
-
 export default auth;
