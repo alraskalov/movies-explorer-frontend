@@ -21,6 +21,7 @@
   object-fit: cover;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+  cursor: pointer;
 }
 
 .movies-card__title {
@@ -29,6 +30,10 @@
   font-size: 13px;
   line-height: 1.23;
   margin-bottom: 10px;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .movies-card__time {
@@ -42,7 +47,7 @@
 .movies-card__delete {
   padding: 0;
   border: none;
-  background-image: url('../../images/cross.svg');
+  background-image: url("../../images/cross.svg");
   width: 8px;
   height: 8px;
   background-color: transparent;
@@ -57,18 +62,25 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #F4F4F4;
+  background: #f4f4f4;
   cursor: pointer;
-  transition: .3s linear;
+  transition: 0.3s linear;
 }
 
-.movies-card__like:active {
-  background: #2BE080;
+.movies-card__like_active {
+  background: #2be080;
+  transition: 0.3s;
 }
 
 @media screen and (max-width: 1200px) {
   .movies-card__image {
     height: 188px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .movies-card__title {
+    max-width: 149px;
   }
 }
 

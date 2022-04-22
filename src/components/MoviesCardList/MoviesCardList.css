@@ -3,9 +3,19 @@
   margin-bottom: 80px;
   display: grid;
   grid-template-columns: repeat(4, 270px);
-  grid-template-rows: 218px;
   grid-gap: 29px 20px;
   max-width: 1140px;
+  box-sizing: border-box;
+}
+
+.card-list_load {
+  margin-top: 116px;
+  margin-bottom: 80px;
+  display: flex;
+  grid-template-columns: none;
+  grid-template-rows:none;
+  grid-gap: 0 0;
+  align-items: center;
 }
 
 .card-list__button {
@@ -27,20 +37,17 @@
 
 @media screen and (max-width: 1200px) {
   .card-list {
-    grid-template-columns: repeat(2, 339px);
-    grid-template-rows: 257px;
+    grid-template-columns: repeat(2, 1fr);
     margin-top: 132px;
     grid-gap: 36px 30px;
   }
   .card-list__button {
-    width: 708px;
+    width: 100%;
   }
 }
-
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 480px) {
   .card-list {
     grid-template-columns: repeat(1, 300px);
-    grid-template-rows: 235px;
     margin-top: 87px;
     grid-gap: 18px 0;
   }
