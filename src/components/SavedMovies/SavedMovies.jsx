@@ -25,7 +25,6 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
   const filterWithoutCheckbox = savedMovies.filter((c) =>
     c.nameRU.toLowerCase().includes(inputText.toLowerCase())
   );
-  console.log(cards);
   useEffect(() => {
     setIsValid(ref.current.checkValidity());
   }, [setIsValid, ref]);
