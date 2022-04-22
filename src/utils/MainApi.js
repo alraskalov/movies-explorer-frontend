@@ -32,11 +32,13 @@ class MainApi {
   }
 
   changeLikeCard(movie, isLiked, token) {
+    console.log(movie);
     const moviesId = isLiked
       ? movie.find((el) => {
           return el._id;
         })
       : movie;
+      console.log(moviesId);
     return fetch(`${this._url}/movies/${isLiked ? moviesId._id : ""}`, {
       method: isLiked ? "DELETE" : "POST",
       headers: { ...this._headers, authorization: `Bearer ${token}` },

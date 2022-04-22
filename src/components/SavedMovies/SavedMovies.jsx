@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCard from "../MoviesCard/MoviesCard";
@@ -12,7 +12,7 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
   const flag = true;
   const [checked, setChecked] = useState(false);
   const [inputText, setInputText] = useState("");
-  const [cards, setCards] = useState(savedMovies);
+  const [cards, setCards] = useState([]);
   const [flagForm, setFlagForm] = useState(false);
   const ref = createRef();
 
@@ -25,21 +25,26 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
   const filterWithoutCheckbox = savedMovies.filter((c) =>
     c.nameRU.toLowerCase().includes(inputText.toLowerCase())
   );
-
+  console.log(cards);
   useEffect(() => {
     setIsValid(ref.current.checkValidity());
   }, [setIsValid, ref]);
 
   useEffect(() => {
     setCards(savedMovies);
+    switchCheckbox();
   }, [savedMovies]);
 
-  useEffect(() => {
+  const switchCheckbox = useCallback(() => {
     checked || flagForm
       ? setCards(filterWithCheckbox)
       : setCards(filterWithoutCheckbox);
     setFlagForm(false);
-  }, [checked, flagForm, inputText]);
+  });
+
+  useEffect(() => {
+    switchCheckbox();
+  }, [checked, flagForm]);
 
   const handleCheckboxChange = (e) => {
     setChecked(e.target.checked);

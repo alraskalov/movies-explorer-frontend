@@ -67,12 +67,17 @@ const App = () => {
   };
 
   const handleCardLike = (movie) => {
+    console.log("savedMovies ", savedMovies);
+
     const isLiked = savedMovies.some((i) => {
       return i.movieId === (movie.id !== undefined ? movie.id : movie.movieId);
     });
     const moviesId = savedMovies.filter((i) => {
       return i.movieId === (movie.id !== undefined ? movie.id : movie.movieId);
     });
+    console.log("movie.id ", movie.id);
+    console.log("movie ", movie);
+    console.log("moviesId ", moviesId);
     mainApi
       .changeLikeCard(isLiked ? moviesId : movie, isLiked, jwt)
       .then((newCard) => {

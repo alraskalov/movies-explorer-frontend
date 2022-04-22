@@ -14,7 +14,7 @@ const SearchForm = forwardRef(
       checked,
       onSubmitFlag,
       isLoad,
-      onCheckMovies,
+      onCheckMovies = () => null,
     },
     ref
   ) => {
