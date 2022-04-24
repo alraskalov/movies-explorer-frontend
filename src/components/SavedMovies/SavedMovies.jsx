@@ -1,5 +1,6 @@
 import React, { createRef, useCallback, useEffect, useState } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import ErrorText from "../ErrotText/ErrorText";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -14,6 +15,7 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
   const [inputText, setInputText] = useState("");
   const [cards, setCards] = useState([]);
   const [flagForm, setFlagForm] = useState(false);
+  const [checkMovies, setCheckMovies] = useState(false);
   const ref = createRef();
 
   const filterWithCheckbox = savedMovies.filter(
@@ -59,6 +61,10 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
     callback();
   };
 
+  const checkEmptyMovies = () => {
+    setCheckMovies(true);
+  };
+
   return (
     <section className="saved-movies page__saved-movies">
       <SearchForm
@@ -71,9 +77,13 @@ const SavedMovies = ({ savedMovies, onCardLike }) => {
         name="search-save"
         onGetMovies={handleSubmitForm}
         onSubmitFlag={handleSubmitFlag}
+        onCheckMovies={checkEmptyMovies}
       />
       <FilterCheckbox onChange={handleCheckboxChange} checked={checked} />
-      <MoviesCardList>
+      <MoviesCardList checkMovies={checkMovies}>
+        {!cards?.length && checkMovies && (
+          <ErrorText>Ничего не найдено</ErrorText>
+        )}
         {!!cards.length &&
           cards.map((movie) => (
             <MoviesCard

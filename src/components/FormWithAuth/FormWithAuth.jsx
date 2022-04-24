@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import "./FormWithAuth.css";
 import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
@@ -18,14 +18,26 @@ const FormWithAuth = forwardRef(
       isValid = true,
       errors,
       errorApi,
-      isLoad
+      isLoad,
     },
     ref
   ) => {
+
+    const [isValidEmail, setIsValidEmail] = useState(false)
     const handleChange = (e) => {
       onChange(e);
     };
-
+    const validEmail = (e) => {
+      const re =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        console.log(e.target.value);
+        if(re.test(e.target.value)) {
+          setIsValidEmail(false)
+        } else {
+          setIsValidEmail(true)
+        }
+    }
+    console.log(isValidEmail);
     return (
       <section className="auth page__auth">
         <Link to="/" className="auth__home">
@@ -70,13 +82,17 @@ const FormWithAuth = forwardRef(
                   name="email"
                   placeholder="Введите ваш e-mail"
                   className="auth__input"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e)
+                    validEmail(e)
+                  }}
                   value={userEmail || ""}
                   disabled={isLoad}
                   required
                 />
               </label>
               <ErrorText err="err-auth">{errors.email || ""}</ErrorText>
+              <ErrorText err="err-auth">{isValidEmail ? "E-mail должен быть в формате: 'example@mail.com'": ""}</ErrorText>
             </div>
 
             <div className="auth__label-container">
@@ -89,6 +105,7 @@ const FormWithAuth = forwardRef(
                   placeholder="Введите ваш пароль"
                   className="auth__input last"
                   onChange={handleChange}
+                  minLength="6"
                   value={userPassword || ""}
                   disabled={isLoad}
                   required
@@ -103,10 +120,10 @@ const FormWithAuth = forwardRef(
             >
               <ErrorText err="err-auth">{errorApi || ""}</ErrorText>
               <button
-                disabled={!isValid && !isLoad}
+                disabled={!isValid && !isLoad && !isValidEmail}
                 type="submit"
                 className={`auth__submit-btn hover-btn ${
-                  isValid && !isLoad ? "" : "auth__submit-btn_disabled"
+                  isValid && !isLoad && !isValidEmail ? "" : "auth__submit-btn_disabled"
                 }`}
               >
                 {buttonText}

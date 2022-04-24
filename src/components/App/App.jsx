@@ -87,6 +87,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err === "Ошибка: 500") setGlobalError(500);
       });
   };
 

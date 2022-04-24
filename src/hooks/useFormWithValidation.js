@@ -10,10 +10,10 @@ export function useFormWithValidation() {
     const name = target.name;
     const value = target.value.trim();
     if (name === "name") {
-      setValues({ ...values, [name]: value.replace(
-        /[^A-Za-zА-Яа-яёЁ  -]/ig,
-        ""
-      ) });
+      setValues({
+        ...values,
+        [name]: value.replace(/[^A-Za-zА-Яа-яёЁ  -]/gi, ""),
+      });
     } else {
       setValues({
         ...values,

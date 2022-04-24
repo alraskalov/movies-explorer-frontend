@@ -9,6 +9,7 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import { useWidthSize } from "../../hooks/useWidthSize";
 import { useError } from "../../hooks/useError";
 import ErrorText from "../ErrotText/ErrorText";
+import { MOVIES, WIDTH_SIZE } from "../../utils/utils";
 
 const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) => {
   const { values, handleChange, errors, isValid, setIsValid, setValues } =
@@ -16,7 +17,7 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
 
   const [checked, setChecked] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [countMovies, setCountMovies] = useState(12);
+  const [countMovies, setCountMovies] = useState(MOVIES.COUNT_INITIAL_CARDS);
   const [flag, setFlag] = useState(false);
   const [checkMovies, setCheckMovies] = useState(false);
   const widthSize = useWidthSize();
@@ -30,7 +31,7 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
     ...cards?.filter(
       (c) =>
         c.nameRU.toLowerCase().includes(inputText.toLowerCase()) &&
-        c.duration <= 40
+        c.duration <= MOVIES.MOVIE_DURATION
     ),
   ];
 
@@ -48,13 +49,14 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
   };
 
   const loadMovies = () => {
-    if (widthSize >= 320 && widthSize <= 480) setCountMovies(countMovies + 2);
-    if (widthSize > 480 && widthSize <= 1200) setCountMovies(countMovies + 2);
-    if (widthSize > 1200) setCountMovies(countMovies + 4);
+    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL) setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
+    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE) setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
+    if (widthSize > WIDTH_SIZE.LARGE) setCountMovies(countMovies + MOVIES.RENDER_MAX_CARDS);
   };
   const checkEmptyMovies = () => {
     setCheckMovies(true)
   }
+
   useEffect(() => {
     setIsValid(ref.current.checkValidity());
   }, [setIsValid, ref]);
@@ -67,9 +69,13 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
   }, []);
 
   useEffect(() => {
-    if (widthSize >= 320 && widthSize <= 480) setCountMovies(5);
-    if (widthSize > 480 && widthSize <= 1200) setCountMovies(8);
-    if (widthSize > 1200) setCountMovies(12);
+    localStorage.setItem("checkbox", checked);
+  }, [checked])
+
+  useEffect(() => {
+    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL) setCountMovies(MOVIES.COUNT_320PX_CARD);
+    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE) setCountMovies(MOVIES.COUNT_768PX_CARD);
+    if (widthSize > WIDTH_SIZE.LARGE) setCountMovies(MOVIES.COUNT_INITIAL_CARDS);
   }, [widthSize]);
 
   useEffect(() => {
@@ -78,6 +84,7 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
       : setMovies(filterWithoutCheckbox);
     setFlag(false);
   }, [checked, flag]);
+
   return (
     <section className="movies page__movies">
       <SearchForm

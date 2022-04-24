@@ -128,6 +128,10 @@
   margin-bottom: 6px;
 }
 
+.auth__label-container {
+  align-items: flex-start;
+}
+
 .auth__label-container:not(:last-child) {
   display: flex;
   flex-direction: column;
