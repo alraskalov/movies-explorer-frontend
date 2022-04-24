@@ -11,7 +11,13 @@ import { useError } from "../../hooks/useError";
 import ErrorText from "../ErrotText/ErrorText";
 import { MOVIES, WIDTH_SIZE } from "../../utils/utils";
 
-const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) => {
+const Movies = ({
+  onGetMovies,
+  isLoad,
+  onCardLike,
+  savedMovies,
+  globalError,
+}) => {
   const { values, handleChange, errors, isValid, setIsValid, setValues } =
     useFormWithValidation();
 
@@ -21,7 +27,7 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
   const [flag, setFlag] = useState(false);
   const [checkMovies, setCheckMovies] = useState(false);
   const widthSize = useWidthSize();
-  const errorApi = useError(globalError)
+  const errorApi = useError(globalError);
   const inputText = localStorage.getItem("input") || "";
   const checkbox = JSON.parse(localStorage.getItem("checkbox")) || false;
   const cards = JSON.parse(localStorage.getItem("movies")) || [];
@@ -49,13 +55,16 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
   };
 
   const loadMovies = () => {
-    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL) setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
-    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE) setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
-    if (widthSize > WIDTH_SIZE.LARGE) setCountMovies(countMovies + MOVIES.RENDER_MAX_CARDS);
+    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL)
+      setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
+    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE)
+      setCountMovies(countMovies + MOVIES.RENDER_MIN_CARDS);
+    if (widthSize > WIDTH_SIZE.LARGE)
+      setCountMovies(countMovies + MOVIES.RENDER_MAX_CARDS);
   };
   const checkEmptyMovies = () => {
-    setCheckMovies(true)
-  }
+    setCheckMovies(true);
+  };
 
   useEffect(() => {
     setIsValid(ref.current.checkValidity());
@@ -70,12 +79,15 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
 
   useEffect(() => {
     localStorage.setItem("checkbox", checked);
-  }, [checked])
+  }, [checked]);
 
   useEffect(() => {
-    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL) setCountMovies(MOVIES.COUNT_320PX_CARD);
-    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE) setCountMovies(MOVIES.COUNT_768PX_CARD);
-    if (widthSize > WIDTH_SIZE.LARGE) setCountMovies(MOVIES.COUNT_INITIAL_CARDS);
+    if (widthSize >= WIDTH_SIZE.XXSMALL && widthSize <= WIDTH_SIZE.XSMALL)
+      setCountMovies(MOVIES.COUNT_320PX_CARD);
+    if (widthSize > WIDTH_SIZE.XSMALL && widthSize <= WIDTH_SIZE.LARGE)
+      setCountMovies(MOVIES.COUNT_768PX_CARD);
+    if (widthSize > WIDTH_SIZE.LARGE)
+      setCountMovies(MOVIES.COUNT_INITIAL_CARDS);
   }, [widthSize]);
 
   useEffect(() => {
@@ -110,14 +122,30 @@ const Movies = ({ onGetMovies, isLoad, onCardLike, savedMovies, globalError }) =
       >
         {isLoad && <Preloader />}
         {errorApi === 500 && <ErrorText>{errorApi}</ErrorText>}
-        {!movies?.length && checkMovies && <ErrorText>Ничего не найдено</ErrorText>}
+        {!movies?.length && checkMovies && (
+          <ErrorText>Ничего не найдено</ErrorText>
+        )}
         {!checked
           ? !!movies?.length &&
             movies
               .slice(0, countMovies)
-              .map((movie) => <MoviesCard key={movie.id} movie={movie} onCardLike={onCardLike} savedMovies={savedMovies} />)
+              .map((movie) => (
+                <MoviesCard
+                  key={movie.id}
+                  movie={movie}
+                  onCardLike={onCardLike}
+                  savedMovies={savedMovies}
+                />
+              ))
           : !!movies?.length &&
-            movies.map((movie) => <MoviesCard key={movie.id} movie={movie} onCardLike={onCardLike} savedMovies={savedMovies} />)}
+            movies.map((movie) => (
+              <MoviesCard
+                key={movie.id}
+                movie={movie}
+                onCardLike={onCardLike}
+                savedMovies={savedMovies}
+              />
+            ))}
       </MoviesCardList>
     </section>
   );

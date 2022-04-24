@@ -22,22 +22,19 @@ const FormWithAuth = forwardRef(
     },
     ref
   ) => {
-
-    const [isValidEmail, setIsValidEmail] = useState(false)
+    const [isValidEmail, setIsValidEmail] = useState(false);
     const handleChange = (e) => {
       onChange(e);
     };
     const validEmail = (e) => {
       const re =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        console.log(e.target.value);
-        if(re.test(e.target.value)) {
-          setIsValidEmail(false)
-        } else {
-          setIsValidEmail(true)
-        }
-    }
-    console.log(isValidEmail);
+      if (re.test(e.target.value)) {
+        setIsValidEmail(false);
+      } else {
+        setIsValidEmail(true);
+      }
+    };
     return (
       <section className="auth page__auth">
         <Link to="/" className="auth__home">
@@ -83,8 +80,8 @@ const FormWithAuth = forwardRef(
                   placeholder="Введите ваш e-mail"
                   className="auth__input"
                   onChange={(e) => {
-                    handleChange(e)
-                    validEmail(e)
+                    handleChange(e);
+                    validEmail(e);
                   }}
                   value={userEmail || ""}
                   disabled={isLoad}
@@ -92,7 +89,11 @@ const FormWithAuth = forwardRef(
                 />
               </label>
               <ErrorText err="err-auth">{errors.email || ""}</ErrorText>
-              <ErrorText err="err-auth">{isValidEmail ? "E-mail должен быть в формате: 'example@mail.com'": ""}</ErrorText>
+              <ErrorText err="err-auth">
+                {isValidEmail
+                  ? "E-mail должен быть в формате: 'example@mail.com'"
+                  : ""}
+              </ErrorText>
             </div>
 
             <div className="auth__label-container">
@@ -123,7 +124,9 @@ const FormWithAuth = forwardRef(
                 disabled={!isValid && !isLoad && !isValidEmail}
                 type="submit"
                 className={`auth__submit-btn hover-btn ${
-                  isValid && !isLoad && !isValidEmail ? "" : "auth__submit-btn_disabled"
+                  isValid && !isLoad && !isValidEmail
+                    ? ""
+                    : "auth__submit-btn_disabled"
                 }`}
               >
                 {buttonText}
