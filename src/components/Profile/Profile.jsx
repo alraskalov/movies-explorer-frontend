@@ -17,6 +17,7 @@ const Profile = ({ onLogout, onUpdateUser, globalError, isLoad }) => {
   } = useFormWithValidation();
 
   const [isEdit, setIsEdit] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
   const errorApi = useError(globalError);
 
   const ref = createRef();
@@ -39,15 +40,26 @@ const Profile = ({ onLogout, onUpdateUser, globalError, isLoad }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email } = values;
-    onUpdateUser({
-      name,
-      email,
-    }, () => {
-      setIsEdit(false)
-      alert("Данные успешно изменены")
-    });
+    onUpdateUser(
+      {
+        name,
+        email,
+      },
+      () => {
+        setIsEdit(false);
+        alert("Данные успешно изменены");
+      }
+    );
   };
-
+  const validEmail = (e) => {
+    const re =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (re.test(e.target.value)) {
+      setIsValidEmail(false);
+    } else {
+      setIsValidEmail(true);
+    }
+  };
   return (
     <section className="profile page__profile">
       <h2 className="profile__title">Привет, {name}!</h2>
@@ -86,21 +98,32 @@ const Profile = ({ onLogout, onUpdateUser, globalError, isLoad }) => {
                 name="email"
                 className="profile__input"
                 value={values.email || ""}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  validEmail(e);
+                }}
                 required
                 disabled={!isEdit || isLoad}
               />
             </label>
             <ErrorText err="input-err">{errors.email || ""}</ErrorText>
+            <ErrorText err="err-auth">
+              {isValidEmail
+                ? "E-mail должен быть в формате: 'example@mail.com'"
+                : ""}
+            </ErrorText>
           </div>
 
           {isEdit ? (
             <div className="profile__button-container">
-                <ErrorText err="profile-err">{errorApi || ""}</ErrorText>
+              <ErrorText err="profile-err">{errorApi || ""}</ErrorText>
               <button
                 type="submit"
                 className={`profile__save ${
-                  (isValid && !isLoad) && !(values.email === email && values.name === name)
+                  isValid &&
+                  !isLoad &&
+                  !isValidEmail &&
+                  !(values.email === email && values.name === name)
                     ? ""
                     : "profile__save_disabled"
                 } hover-btn`}
