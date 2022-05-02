@@ -1,6 +1,6 @@
 ## Проект Movies Explorer - выпускная работа по профессии веб-разработчик курса [Яндекс Практикум](https://praktikum.yandex.ru "Яндекс Практикум")
 
-Ссылка на проект: **[Movies Explorer](https://news-explorer.nomoredomains.work/)**
+Ссылка на проект: **[Movies Explorer](https://movies-explorer-frontend-kappa.vercel.app/)**
 
 Ссылка на репозиторий бэкенда : **[Movies Explorer API](https://github.com/alraskalov/movies-explorer-api)**
 
