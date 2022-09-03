@@ -31,7 +31,7 @@ const Portfolio = () => {
         </li>
         <li className="portfolio__item">
           <a
-            href="https://raskalov.mesto.nomoredomains.work/"
+            href="https://react-mesto-auth-ruddy.vercel.app/"
             className="porfolio__link hover-link"
             target="_blank"
             rel="noreferrer"
